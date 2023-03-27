@@ -1,3 +1,21 @@
 ---Wi-Fi Networks (device not ready) ERROR---
 
-I couldn't connect to wi-fi and it's "displaying device not ready"
+I couldn't connect to wi-fi and it's "displaying device not ready" At present i'm connected via my ethernet(eth0)
+
+ERRORS:
+
+1. device not ready
+
+Fix:
+
+> ip link set wlan0 down (Tried to reconfigure network interface wlan0)(ip stands for Internet Protocol and as the name suggests, the tool is used for 
+                         configuring network interfaces.)
+> ip link set wlan0 up
+> service NetworkManager restart (didn't worked)
+
+I searched for the error on google and read some blogs
+> ./hotspot (tried to enable hotspot to check whether wlan0 can be run and used by hotspot)
+Before: wlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+After: wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500    (wlan0 is running)
+
+I tried to run wlan1
