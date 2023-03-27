@@ -8,14 +8,57 @@ ERRORS:
 
 Fix:
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 > ip link set wlan0 down (Tried to reconfigure network interface wlan0)(ip stands for Internet Protocol and as the name suggests, the tool is used for 
                          configuring network interfaces.)
 > ip link set wlan0 up
 > service NetworkManager restart (didn't worked)
 
-I searched for the error on google and read some blogs
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Searched for the error on google and read some blogs
 > ./hotspot (tried to enable hotspot to check whether wlan0 can be run and used by hotspot)
 Before: wlan0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 After: wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500    (wlan0 is running)
 
-I tried to run wlan1
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Tried some other fixes on blogs
+> nmcli networking off (nmcli is the command-line interface for NetworkManager, a common Linux application for identifying and configuring internet 
+                       connections.)
+> nmcli networking on
+> service NetworkManager restart (didn't worked)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Checking the status of all my network interfaces:
+> nmcli dev status 
+
+Output: 
+
+DEVICE  TYPE      STATE        CONNECTION         
+eth0    ethernet  connected    Wired connection 1 
+wlan0   wifi      unavailable  --                 
+virbr0  bridge    unmanaged    --                 
+vmnet1  ethernet  unmanaged    --                 
+vmnet8  ethernet  unmanaged    --                 
+lo      loopback  unmanaged    -- 
+
+(Now I tried to check the status of wlan0 after starting hotspot. I still see that wlan0 type is wifi and unavailable state, eventhough it is used for 
+hotspot and available)
+
+> nmcli radio wifi (to check whether wifi device is enabled or not!)(it's enabled)
+Tried many nmcli commands and nothing worked.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> iwconfig (Found that wlan0 mode is Master, which is not monitor or managed and I didn't know what it means)(iwconfig is used to display and change the 
+           parameters of the network interface which are specific to the wireless operation)
+Output: wlan0     IEEE 802.11  Mode:Master  Tx-Power=20 dBm
+
+> inxi -Nn (The inxi tool is a full-featured CLI utility that displays all kinds of system information in your terminal)
+
+
+
+
