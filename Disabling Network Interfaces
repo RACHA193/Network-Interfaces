@@ -1,0 +1,16 @@
+---Disabling Network Interfaces---
+
+I've been trying to disable virbr0, vmnet1 and vmnet8 network interfaces, Why? > It's just messy! and i'm not using any virtual machines and etc!
+Open terminal
+> ifconfig (mess everywhere)
+> ip link set virbr0 down
+> ip link set vmnet1 down
+> ip link set vmnet8 down
+> ifconfig (wooof! you can't see them anymore)
+
+If you want to enable them again?
+> ip link set virbr0 up (and so on)
+
+
+
+
