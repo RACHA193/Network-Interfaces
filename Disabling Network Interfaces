@@ -14,6 +14,65 @@ If you want to enable them again?
 
 
 
-Network Interface - A network interface is the point of interconnection between a computer and a private or public network. A network interface is generally
-a network interface card (NIC), but does not have to have a physical form. Instead, the network interface can be implemented in software.
+Network Interface (A network interface is the point of interconnection between a computer and a private or public network. A network interface is generally
+                   a network interface card (NIC), but does not have to have a physical form. Instead, the network interface can be implemented in software)
 
+                  (A NIC provides a computer with a dedicated, full-time connection to a network. It implements the physical layer circuitry necessary for 
+                  communicating with a data link layer standard, such as Ethernet or Wi-Fi. Each card represents a device and can prepare, transmit and 
+                  control the flow of data on the network.)
+
+                  (The NIC uses the OSI model to send signals at the physical layer, transmit data packets at the network layer and operate as an interface 
+                  at the TCP/IP layer.)
+                  
+                  (https://www.techtarget.com/searchnetworking/definition/network-interface-card)
+
+
+
+virbr0 (The virbr0, or "Virtual Bridge 0" interface is used for NAT (Network Address Translation). It is provided by the libvirt library, and virtual 
+       environments sometimes use it to connect to the outside network.)             
+       
+       (A bridge between your physical Network Card and your Virtual Machine's virtual Network Card)
+
+
+
+libvirt library (libvirt is an open-source API, daemon and management tool for managing platform virtualization. It can be used to manage KVM, Xen, VMware 
+                ESXi, QEMU and other virtualization technologies.)      
+                
+                (libvirt focuses on managing single hosts and provides APIs to enumerate, monitor and use the resources available on the managed node)
+
+
+
+vmnet0 (vmnet0 is actually a virtual bridge. This bridge has many ports. One port is used to connect to your Host, and one port is used to connect to your 
+       virtual machine.)       
+
+
+
+vmnet1 (vmnet1 presents as Host-Only network mode, which is used to establish an isolated network environment, where vmnet1 is also a virtual switch, one 
+       port of the switch is connected to your Host, and the other port is connected To the virtual DHCP server (actually a component of vmware), the 
+       remaining port is connected to the virtual machine.) 
+       
+       (The virtual network card "VMWare Virtual Ethernet Adapter for VMnet1" serves as the gateway interface of the virtual machine and provides services 
+       for the virtual machine.)
+        
+       (The main manifestation is No NAT service is provided, so that virtual machines cannot access addresses outside the network segment specified in 
+       Host-Only mode.)
+
+
+
+NAT (NAT stands for network address translation. It's a way to map multiple private addresses inside a local network to a public IP address before 
+    transferring the information onto the internet.)      
+    
+    (Organizations that want multiple devices to employ a single IP address use NAT, as do most home routers.)
+    
+    (DHCP is used to assign IP addresses to clients, whereas NAT is used to translate one address to another primarily to support internet access but 
+    translating a Private address into a public address.)
+
+
+
+vmnet8 (vmnet8 uses NAT, the simplest networking method, from the host's "VMWare Virtual Ethernet Adapter for VMnet8" virtual network card, connected to the 
+       vmnet8 virtual switch, the other port of the virtual switch is connected to the virtual NAT server ( This is also a Vmware component), and one port 
+       is connected to the virtual DHCP server, and the other ports are connected to the virtual machine.)
+       
+       (VMware VMnet8 uses NAT virtual network by default, which means the VM in VMnet8 is connected via network address translation (NAT) to the host 
+       network adaptor, make your VM looks like it’s behind a NAT router.)
+       
