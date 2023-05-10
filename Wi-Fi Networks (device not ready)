@@ -59,6 +59,28 @@ Output: wlan0     IEEE 802.11  Mode:Master  Tx-Power=20 dBm
 
 > inxi -Nn (The inxi tool is a full-featured CLI utility that displays all kinds of system information in your terminal)
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+> systemctl status NetworkManager (Network Manager is up and running but there are warnings and errors)
+Output: <warn>  [1683703543.6489] device (wlan0): re-acquiring supplicant interface (#2).
+        <error> [1683703546.6507] device (wlan0): Couldn't initialize supplicant interface: Failed to D-Bus activate wpa_supplicant>
+        <info>  [1683703585.6528] device (wlan0): supplicant interface keeps failing, giving up
+        
+(So I remember masking the wpa_supplicant service during solving the issue of wifi hotspot, so I unmasked it and checked)
 
+> airmon-ng check (no wpa_supplicant service is running)
+> service wpa_supplicant status (dead)
+> systemctl unmask wpa_supplicant.service
+> service wpa_supplicant start
+> airmon-ng check (service wpa_supplicant up and running)
+> systemctl status NetworkManager (still warning and errors)
+> service network-manager restart (no error)
+
+(Wi-Fi is up and running)
+
+(Then I tried to run the hotspot and it didn't worked. It's error is "Failed to set beacon parameters". But, if we masked the wpa_supplicant
+service then the hotspot is up and running but we'll lose the wifi service. So we can run either hotspot or wifi one at a time, just like in
+mobile devices. I guess there's lot more I need to study here.)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 
